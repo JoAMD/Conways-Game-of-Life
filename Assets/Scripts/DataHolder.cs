@@ -61,10 +61,68 @@ public class DataHolder : MonoBehaviour
 
     [SerializeField] private UnityEngine.UI.Button startGameBtn;
 
+    [Header("n x n")]
+    public GameObject cellnXn;
+    public Transform cellsHoldernXnTransform;
+    public int n;
+
     private void Start()
     {
         startGameBtn.interactable = false;
 
+        if(n > 0)
+        {
+            InitialiseGame(n);
+        }
+        else
+        {
+            InitialiseGame();
+        }
+
+        startGameBtn.interactable = true;
+
+        //for (int i = 0; i < cells.Length; i++)
+        //{
+        //    for (int j = 0; j < cells[i].Length; j++)
+        //    {
+        //        Debug.Log(cells[i][j].transform.position);
+        //    }
+        //}
+
+    }
+
+    private void InitialiseGame(int n)
+    {
+        Camera.main.orthographicSize = (n / 2) * 1.3f;
+
+        float initPosY = (n - 1) / 2;
+        float initPosX = -initPosY;
+        Vector2 pos = new Vector2(initPosX, initPosY);
+
+        cellsHolder = new CellsHolder();
+        cellsHolder.cells = new CellBehaviour[n][];
+        GameObject cell;
+
+        Debug.Log("initPos = " + pos);
+
+        for (int i = 0; i < n; i++)
+        {
+            cellsHolder.cells[i] = new CellBehaviour[n];
+            for (int j = 0; j < n; j++)
+            {
+                cell = Instantiate(cellnXn, pos, Quaternion.identity, cellsHoldernXnTransform);
+                Debug.Log("pos = " + pos + " i = " + i + " j = " + j);
+                pos.x += 1;
+                cellsHolder.cells[i][j] = cell.GetComponent<CellBehaviour>();
+            }
+            pos.x = initPosX;
+            pos.y--;
+        }
+
+    }
+
+    private void InitialiseGame()
+    {
         float sqrtf = Mathf.Sqrt(cellsList.Count);
         int sqrt = (int)sqrtf;
         if (sqrtf != sqrt)
@@ -80,7 +138,7 @@ public class DataHolder : MonoBehaviour
         cellsHolder.cells[0] = new CellBehaviour[sqrt];
         for (int i = 0; i < cellsList.Count; i++, idx++)
         {
-            if(idx == sqrt)
+            if (idx == sqrt)
             {
                 idx = 0;
                 idx2++;
@@ -90,17 +148,6 @@ public class DataHolder : MonoBehaviour
             cellsList[i].j = idx;
             cellsHolder.cells[idx2][idx] = cellsList[i];
         }
-
-        startGameBtn.interactable = true;
-
-        //for (int i = 0; i < cells.Length; i++)
-        //{
-        //    for (int j = 0; j < cells[i].Length; j++)
-        //    {
-        //        Debug.Log(cells[i][j].transform.position);
-        //    }
-        //}
-
     }
 
 }
