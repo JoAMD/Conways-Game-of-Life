@@ -17,6 +17,12 @@ public class CellsHolder
         new Vector2Int(-1, 1)
     };
 
+    /// <summary>
+    /// Each cell calls this function if they are alive
+    /// it goes through all the 8 neighbours and adds 1 to the alive neighbours count (neighbourAliveCtr++)
+    /// </summary>
+    /// <param name="i"> x index of the original alive cell in the array </param>
+    /// <param name="j"> y index of the original alive cell in the array </param>
     public void GiveAliveCountToNeighbours(int i, int j)
     {
         int x = i, y = j;
@@ -33,6 +39,12 @@ public class CellsHolder
         }
     }
 
+    /// <summary>
+    /// Checks if the cell is inside the array or not
+    /// </summary>
+    /// <param name="i"> x index of the original alive cell in the array </param>
+    /// <param name="j"> y index of the original alive cell in the array </param>
+    /// <returns> returns if the cell is in the array or not </returns>
     private bool IsInBounds(int i, int j)
     {
         return
@@ -44,6 +56,10 @@ public class CellsHolder
 
 }
 
+/// <summary>
+/// This class holds the important details of the game
+/// It also takes care of initialising the game
+/// </summary>
 public class DataHolder : MonoBehaviour
 {
     public static DataHolder instance;
@@ -68,6 +84,7 @@ public class DataHolder : MonoBehaviour
 
     private void Start()
     {
+        //disabling start button interactable so that game initialising can be done (coroutine may be needed)_
         startGameBtn.interactable = false;
 
         if(n > 0)
@@ -79,6 +96,7 @@ public class DataHolder : MonoBehaviour
             InitialiseGame();
         }
 
+        //start game button made interactable again after initialising the game (coroutine may be needed)
         startGameBtn.interactable = true;
 
         //for (int i = 0; i < cells.Length; i++)
@@ -91,6 +109,10 @@ public class DataHolder : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Initialising the game, spawns n x n grid for the game of life to run (WIP)
+    /// </summary>
+    /// <param name="n"></param>
     private void InitialiseGame(int n)
     {
         Camera.main.orthographicSize = (n / 2) * 1.3f;
@@ -121,6 +143,9 @@ public class DataHolder : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Intiliases the game, takes the cellBehaviours in the cellsList and arranges them in a 2d array for easier referencing when running the game of life.
+    /// </summary>
     private void InitialiseGame()
     {
         float sqrtf = Mathf.Sqrt(cellsList.Count);

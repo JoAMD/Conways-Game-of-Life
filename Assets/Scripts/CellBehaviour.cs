@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Enum to show the cell state, dead or alive
+/// </summary>
 public enum CellState
 {
     Dead,
     Alive
 }
 
+/// <summary>
+/// Class to take care of each cell behaviour during each game tick
+/// Includes rules of the game of life
+/// </summary>
 public class CellBehaviour : MonoBehaviour
 {
 
@@ -28,6 +35,9 @@ public class CellBehaviour : MonoBehaviour
         MainGameControl.GameTick2 -= Game2;
     }
 
+    /// <summary>
+    /// Game tick one in which if this cell is alive, it reports to all its 8 neighbour cells saying they have one more alive neighbour
+    /// </summary>
     private void Game()
     {
         if (cellState == CellState.Alive)
@@ -36,6 +46,10 @@ public class CellBehaviour : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Game tick two in which the alive neighbour count (neighbourAliveCtr) is checked and rules are applied
+    /// so as to find the next alive and dead cells for the next iteration
+    /// </summary>
     private void Game2()
     {
         //decide alive or death, RULES
@@ -76,6 +90,9 @@ public class CellBehaviour : MonoBehaviour
         SwitchCellState();
     }
 
+    /// <summary>
+    /// Switches cell state from alive to dead or from dead to alive
+    /// </summary>
     private void SwitchCellState()
     {
         if (cellState == CellState.Dead)
@@ -88,12 +105,20 @@ public class CellBehaviour : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Makes the cell alive
+    /// CellState enum and renderer material colour
+    /// </summary>
     private void CellLive()
     {
         cellState = CellState.Alive;
         _renderer.material = DataHolder.instance.MAT_CELL_ALIVE;
     }
 
+    /// <summary>
+    /// Makes the cell dead
+    /// CellState enum and renderer material colour
+    /// </summary>
     private void CellDie()
     {
         cellState = CellState.Dead;
