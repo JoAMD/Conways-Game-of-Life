@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Initialises the game, by taking care of all the cell details by using the references from DataHolder as well
+/// </summary>
 public class InitialiseGameControl : MonoBehaviour
 {
 
