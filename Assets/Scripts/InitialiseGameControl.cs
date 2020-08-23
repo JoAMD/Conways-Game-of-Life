@@ -100,6 +100,7 @@ public class InitialiseGameControl : MonoBehaviour
         int idx = 0;
         int idx2 = 0;
         cellsHolder.cells[0] = new CellBehaviour[sqrt];
+        CellBehaviour cellBehaviour;
         for (int i = 0; i < DataHolder.instance.cellsParentTransform.childCount; i++, idx++)
         {
             if (idx == sqrt)
@@ -108,9 +109,10 @@ public class InitialiseGameControl : MonoBehaviour
                 idx2++;
                 cellsHolder.cells[idx2] = new CellBehaviour[sqrt];
             }
-            DataHolder.instance.cellsParentTransform.GetChild(i).GetComponent<CellBehaviour>().i = idx2;
-            DataHolder.instance.cellsParentTransform.GetChild(i).GetComponent<CellBehaviour>().j = idx;
-            cellsHolder.cells[idx2][idx] = DataHolder.instance.cellsParentTransform.GetChild(i).GetComponent<CellBehaviour>();
+            cellBehaviour = DataHolder.instance.cellsParentTransform.GetChild(i).GetComponent<CellBehaviour>();
+            cellBehaviour.i = idx2;
+            cellBehaviour.j = idx;
+            cellsHolder.cells[idx2][idx] = cellBehaviour;
         }
         DataHolder.instance.cellsHolder = cellsHolder;
     }
